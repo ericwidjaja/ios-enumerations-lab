@@ -38,16 +38,94 @@ case .iPad(let modelType):
 ## Question 2
 
 a) Write an enum called `Shape` and give it cases for `triangle`, `rectangle`, `square`, `pentagon`, and `hexagon`.
-
+```swift
+enum Shape {
+    case triangle
+    case rectangle
+    case square
+    case pentagon
+    case hexagon
+}
+```
 b) Write a method inside `Shape` that returns how many sides the shape has. Create a variable called `myFavoritePolygon` and assign it to one of the shapes above, then print out how many sides it has.
+```swift
+enum Shapes {
+    case triangle(Int)
+    case square(Int), rectangle (Int)
+    case pentagon(Int)
+    case hexagon(Int)
+}
+
+var myFavoritePolygon = Shapes.square(4)
+
+switch myFavoritePolygon {
+    case .triangle(let sides):
+    print("A triangle has \(sides) sides.")
+    case .rectangle(let sides):
+    print("A rectangle has \(sides) sides.")
+    case .pentagon(let sides):
+    print("A pentagon \(sides) sides.")
+    case .square(let sides):
+    print("A square \(sides) sides.")
+    case .hexagon(let sides):
+    print("A hexagon has \(sides) sides.")
+}
+
+myFavoritePolygon
+```
+
 
 c) Re-write `Shape` so that each case has an associated value of type Int that will represent the length of the sides (assume the shapes are regular polygons so all the sides are the same length) and write a method inside that returns the perimeter of the shape.
+```swift
+enum Shape {
+    case triangle(Int)
+    case square(Int), rectangle (Int)
+    case pentagon(Int)
+    case hexagon(Int)
 
+    func perimeter() -> Int {
+        switch self {
+        case .triangle(let length):
+            return length * 3
+        case .rectangle(let length):
+            return length * 4
+        case .square(let length):
+            return length * 4
+        case .pentagon(let length):
+            return length * 5
+        case .hexagon(let length):
+            return length * 6
+            }
+        }
+    }
+
+var myFavoritePolygon = Shape.square(9)
+print(myFavoritePolygon.perimeter())
+```
 
 ## Question 3
 
 Write an enum called `OperatingSystem` and give it cases for `windows`, `mac`, and `linux`. Create an array of 10 `OperatingSystem` objects where each one is set to a random operating system. Then, iterate through the array and print out a message depending on the operating system.
+```swift
+enum OperatingSystem {
+    case windows
+    case mac
+    case linux
+}
 
+var opSysArray = [OperatingSystem.windows,OperatingSystem.mac ,OperatingSystem.linux ,OperatingSystem.mac, OperatingSystem.linux, OperatingSystem.mac, OperatingSystem.windows, OperatingSystem.windows, OperatingSystem.mac, OperatingSystem.linux]
+
+for name in opSysArray {
+    switch name {
+    case .windows:
+        print("Windows OS")
+    case .mac:
+        print("Mac OS")
+    case .linux:
+        print("Linux OS")
+    }
+}
+```
 
 ## Question 4
 
@@ -70,7 +148,26 @@ enum Direction {
 var location = (x: 0, y: 0)
 var steps: [Direction] = [.up, .up, .left, .down, .left]
 
-// your code here
+    // your code here
+
+for direction in steps {
+    print("The current location is at x: \(location.x) and y: \(location.y)")
+
+    print("I am about to go \(direction)")
+    switch direction {
+    case .up:
+        location.y += 1
+    case .down:
+        location.y -= 1
+    case .left:
+        location.x -= 1
+    case .right:
+        location.x += 1
+    }
+}
+
+print("The final location is: \(location)")
+
 ```
 
 
@@ -83,8 +180,42 @@ b) Define an enumeration named `MatchResult` with three members: `.win`, `.draw`
 c) Write a function called `match` that takes two `HandShapes` and returns a `MatchResult`. It should return the outcome for the first player (the one with the first hand shape).
 
 Hint: Rock beats scissors, paper beats rock, scissor beats paper
+```swift
+enum Handshape {
+    case rock
+    case paper
+    case scissors
+}
 
+enum MatchResult {
+    case win
+    case draw
+    case lose
+}
 
+func match(firstShape:Handshape, secondShape: Handshape) -> MatchResult {
+    switch firstShape {
+    case .rock:
+        switch secondShape {
+        case .rock: return .draw
+        case .paper: return .lose
+        case .scissors: return .win
+        }
+    case .paper:
+        switch secondShape {
+        case .rock: return .win
+        case .paper: return .draw
+        case .scissors: return .lose
+        }
+    case .scissors:
+        switch secondShape {
+        case .rock: return .lose
+        case .paper: return .win
+        case .scissors: return .draw
+        }
+    }
+}
+```
 ## Question 6
 
 a) You are given a `CoinType` enumeration which describes different coin values. Print the total value of the coins in the array `moneyArray` which contains tuples of type (`quantity`, `CoinType`).
